@@ -1,5 +1,42 @@
 let myLibrary = [];
 
+function storageAvailable(type) {
+  // checks if local storage is available
+  // taken from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API)
+  var storage;
+  try {
+      storage = window[type];
+      var x = '__storage_test__';
+      storage.setItem(x, x);
+      storage.removeItem(x);
+      return true;
+  }
+  catch(e) {
+      return e instanceof DOMException && (
+          // everything except Firefox
+          e.code === 22 ||
+          // Firefox
+          e.code === 1014 ||
+          // test name field too, because code might not be present
+          // everything except Firefox
+          e.name === 'QuotaExceededError' ||
+          // Firefox
+          e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+          // acknowledge QuotaExceededError only if there's something already stored
+          (storage && storage.length !== 0);
+  }
+}
+
+if (storageAvailable('localStorage')) {
+  // storage is available so check if myLibrary already stored
+  if (localStorage.getItem('myLibrary') !== null) {
+    storageData = JSON.parse(localStorage.getItem('myLibrary'));
+    for (let book of storageData) {
+      myLibrary.push(new Book(book.title, book.author, book.numOfPages, book.read));
+    }
+  }
+}
+
 function Book(title, author, numOfPages, read) {
   // Book constructor
   this.title = title;
@@ -34,8 +71,8 @@ Book.prototype.createBookElement = function() {
     read.innerHTML = 'Not Read';
   }
 
+  // add html elements to card and return
   card.append(title, author, numOfPages, read);
-
   return card;
 }
 
@@ -54,6 +91,11 @@ function addBookToLibrary() {
 
   // return to list of books
   displayBooks(myLibrary);
+
+  // update storage if necessary
+  if (storageAvailable('localStorage')) {
+    localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+  }
 }
 
 function displayBooks(books) {
@@ -61,6 +103,7 @@ function displayBooks(books) {
   const div = document.createElement('div');
   div.id = 'books';
   for (let book of books) {
+    console.log(typeof(book));
     div.append(book.createBookElement());
   }
   root.replaceChildren(div);
