@@ -28,5 +28,33 @@ function displayBooks(books) {
   }
 }
 
+function createForm() {
+  // create container element
+  const div = document.createElement('div');
+  
+  // create input elements and set ids
+  const title = document.createElement('input');
+  title.id = 'title';
+  
+  const author = document.createElement('input');
+  author.id = 'author';
+
+  const numOfPages = document.createElement('input');
+  numOfPages.id = 'number-of-pages';
+
+  const read = document.createElement('button');
+  read.id = 'read';
+
+  const enter = document.createElement('button');
+  enter.id = 'enter';
+
+  // append elements to container
+  div.append(title);
+  div.append(author);
+  div.append(numOfPages);
+  div.append(read);
+  div.append(enter);
+}
+
 // wire up new-book button
-document.getElementById('new-book').addEventListener('click', addBookToLibrary);
+document.getElementById('new-book').addEventListener('click', createForm);
