@@ -8,6 +8,37 @@ function Book(title, author, numOfPages, read) {
   this.read = read;
 }
 
+Book.prototype.createBookElement = function() {
+  // create container for book info
+  const card = document.createElement('div');
+  card.class = 'card';
+
+  // create elements for all the properties of a book
+  const title = document.createElement('h1');
+  title.id = 'title';
+  title.innerHTML = this.title;
+
+  const author = document.createElement('h2');
+  author.id = 'author';
+  author.innerHTML = this.author;
+
+  const numOfPages = document.createElement('p');
+  numOfPages.id = 'number-of-pages';
+  numOfPages.innerHTML = this.numOfPages + ' pages';
+
+  const read = document.createElement('p');
+  read.id = 'read';
+  if (this.read === 'on') {
+    read.innerHTML = 'Read';
+  } else {
+    read.innerHTML = 'Not Read';
+  }
+
+  card.append(title, author, numOfPages, read);
+
+  return card;
+}
+
 function addBookToLibrary() {
   // get data from entry fields
   const title = document.getElementById('title').value;
@@ -16,20 +47,25 @@ function addBookToLibrary() {
   const read = document.getElementById('read').value;
 
   // create book object
-  book = Book(title, author, numOfPages, read);
+  book = new Book(title, author, numOfPages, read);
 
   // add book to myLibrary
   myLibrary.push(book);
 
   // return to list of books
-  
-  root.replaceChildren()
+  displayBooks(myLibrary);
 }
 
 function displayBooks(books) {
-  for (let book in books) {
-    console.log(book);
+  // creates a div container to hold cards for each book and appends to root element
+  const div = document.createElement('div');
+  for (let book of books) {
+    div.append(book.createBookElement());
   }
+  root.replaceChildren(div);
+
+  // add New Book button back
+  root.appendChild(newBookButton);
 }
 
 function createForm() {
@@ -68,7 +104,8 @@ function createForm() {
 }
 
 // wire up new-book button
-document.getElementById('new-book').addEventListener('click', createForm);
+const newBookButton = document.getElementById('new-book')
+newBookButton.addEventListener('click', createForm);
 
 // create var for root element
 const root = document.getElementById('root');
