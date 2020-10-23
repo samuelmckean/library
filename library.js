@@ -11,7 +11,7 @@ function Book(title, author, numOfPages, read) {
 Book.prototype.createBookElement = function() {
   // create container for book info
   const card = document.createElement('div');
-  card.class = 'card';
+  card.className = 'card';
 
   // create elements for all the properties of a book
   const title = document.createElement('h1');
@@ -59,6 +59,7 @@ function addBookToLibrary() {
 function displayBooks(books) {
   // creates a div container to hold cards for each book and appends to root element
   const div = document.createElement('div');
+  div.id = 'books';
   for (let book of books) {
     div.append(book.createBookElement());
   }

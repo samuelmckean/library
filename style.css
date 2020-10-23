@@ -1,0 +1,17 @@
+#books {
+  display: "flexbox";
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  max-width: 25%;
+  border-style: solid;
+  border-color: black;
+  margin: 1em;
+}
+
+#new-book {
+  background-color: lightgreen;
+}
