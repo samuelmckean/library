@@ -114,37 +114,62 @@ function displayBooks(books) {
 
 function createForm() {
   // create container element
-  const div = document.createElement('div');
-  div.id = 'form';
+  const form = document.createElement('form');
   
   // create input elements and set ids
+  const titleDiv = document.createElement('div');
+  const titleLabel = document.createElement('label');
+  titleLabel.for = 'title';
+  titleLabel.innerText = 'Title: ';
   const title = document.createElement('input');
   title.id = 'title';
+  title.name = 'title';
   title.type = 'text';
-  title.placeholder = 'Title';
+  title.required = true;
+  titleDiv.append(titleLabel, title);
   
+  const authorDiv = document.createElement('div');
+  const authorLabel = document.createElement('label');
+  authorLabel.for = 'author';
+  authorLabel.innerText = 'Author: ';
   const author = document.createElement('input');
   author.id = 'author';
   author.type = 'text';
-  author.placeholder = 'Author';
+  author.name = 'Author';
+  author.required = true;
+  authorDiv.append(authorLabel, author);
 
+  const numOfPagesDiv = document.createElement('div');
+  const numOfPagesLabel = document.createElement('label');
+  numOfPagesLabel.for = 'number-of-pages';
+  numOfPagesLabel.innerText = 'Number of Pages: ';
   const numOfPages = document.createElement('input');
   numOfPages.id = 'number-of-pages';
   numOfPages.type = 'number';
-  numOfPages.placeholder = '0';
+  numOfPages.name = 'number-of-pages';
+  numOfPages.required = true;
+  numOfPagesDiv.append(numOfPagesLabel, numOfPages);
 
+  const readDiv = document.createElement('div');
+  const readLabel = document.createElement('label');
+  readLabel.for = 'read';
+  readLabel.innerText = 'Read: ';
   const read = document.createElement('input');
   read.id = 'read';
+  read.name = 'read';
   read.type = 'checkbox';
+  read.required = true;
+  readDiv.append(readLabel, read);
 
-  const enter = document.createElement('button');
-  enter.id = 'enter';
-  enter.innerHTML = 'Submit';
-  enter.addEventListener('click', addBookToLibrary);
+  const submitDiv = document.createElement('div');
+  const submit = document.createElement('input');
+  submit.type = 'submit';
+  submit.value = 'Submit';
+  submitDiv.append(submit);
 
   // append elements to container
-  div.append(title, author, numOfPages, read, enter);
-  root.replaceChildren(div);
+  form.append(titleDiv, authorDiv, numOfPagesDiv, readDiv, submit);
+  root.replaceChildren(form);
 }
 
 // wire up new-book button
