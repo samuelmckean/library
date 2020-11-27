@@ -159,7 +159,6 @@ function createForm() {
   read.id = 'read';
   read.name = 'read';
   read.type = 'checkbox';
-  read.required = true;
   readDiv.append(readLabel, read);
 
   const submitDiv = document.createElement('div');
