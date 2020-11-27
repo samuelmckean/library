@@ -78,10 +78,11 @@ Book.prototype.createBookElement = function() {
 
 function addBookToLibrary() {
   // get data from entry fields
-  const title = document.getElementById('title').value;
-  const author = document.getElementById('author').value;
-  const numOfPages = document.getElementById('number-of-pages').value;
-  const read = document.getElementById('read').value;
+  const form = document.querySelector('form');
+  const title = form.title.value;
+  const author = form.author.value;
+  const numOfPages = form['number-of-pages'].value;
+  const read = form.read.value;
 
   // create book object
   book = new Book(title, author, numOfPages, read);
@@ -169,6 +170,7 @@ function createForm() {
 
   // append elements to container
   form.append(titleDiv, authorDiv, numOfPagesDiv, readDiv, submit);
+  form.addEventListener('submit', addBookToLibrary);
   root.replaceChildren(form);
 }
 
